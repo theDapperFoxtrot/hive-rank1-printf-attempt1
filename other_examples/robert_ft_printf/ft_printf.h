@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smishos <smishos@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: rtammi <rtammi@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/24 13:17:50 by smishos           #+#    #+#             */
-/*   Updated: 2024/05/29 10:37:50 by smishos          ###   ########.fr       */
+/*   Created: 2024/05/02 16:52:42 by rtammi            #+#    #+#             */
+/*   Updated: 2024/05/28 15:57:32 by rtammi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,17 @@
 # define FT_PRINTF_H
 
 # include <stdarg.h>
-# include <unistd.h>
+# include "libft.h"
 
-int	ft_putchar(char c);
-int	ft_putstr(char *str);
-int	ft_putnbr(int n);
-int	ft_putnbr_base(unsigned int n, char *base);
-int	ft_printf(const char *input, ...);
+int		ft_printf(const char *str, ...);
+char	*util_uitoa(unsigned int n);
+int		hexlen(unsigned long n);
+
+int		print_char(char c);
+int		print_hex(unsigned long nbr, const char format);
+int		print_nbr(int long nbr);
+int		print_ptr(void *pointer, const char format);
+int		print_str(char *str);
+int		print_uint(unsigned int nbr);
 
 #endif
