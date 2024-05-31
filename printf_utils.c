@@ -6,25 +6,15 @@
 /*   By: smishos <smishos@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 10:28:44 by smishos           #+#    #+#             */
-/*   Updated: 2024/05/29 16:46:54 by smishos          ###   ########.fr       */
+/*   Updated: 2024/05/31 16:32:52 by smishos          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int	ft_putchar(char c)
-{
-	int result;
-
-	result = write(1, &c, 1);
-	if (result == -1)
-		return (-1);
-	return (result);
-}
-
 int	ft_putstr(char *str)
 {
-	int result;
+	int	result;
 
 	result = 0;
 	if (!str)
@@ -44,7 +34,7 @@ int	ft_putstr(char *str)
 
 int	ft_putnbr(int n)
 {
-	int result;
+	int	result;
 
 	result = 0;
 	if (n < 0)
@@ -62,21 +52,51 @@ int	ft_putnbr(int n)
 	return (result);
 }
 
-int	ft_putnbr_base(unsigned int n, char *base)
+int	hexlen(unsigned long n)
 {
-	int result;
-	int base_len;
+	int	len;
 
-	result = 0;
-	base_len = 0;
-	while (base[base_len])
-		base_len++;
-	if (n >= base_len)
+	len = 0;
+	if (n == 0)
+		return (1);
+	while (n > 0)
 	{
-		result += ft_putnbr_base(n / base_len, base);
-		result += ft_putchar(base[n % base_len]);
+		len++;
+		n = n / 16;
 	}
-	else
-		result += ft_putchar(base[n]);
-	return (result);
+	return (len);
+}
+
+static char	*format_check(const char format)
+{
+	if (format == 'X')
+		return ("0123456789ABCDEF");
+	return ("0123456789abcdef");
+}
+
+int	ft_print_hex(unsigned long nbr, const char format)
+{
+	char			*hex;
+	int long long	digit;
+	int				shift;
+	int				zero_check;
+
+	hex = format_check(format);
+	shift = (sizeof(nbr) * 8) - 4;
+	zero_check = 1;
+	while (shift >= 0)
+	{
+		digit = (nbr >> shift) & 0xf;
+		if (digit != 0 || !zero_check)
+		{
+			if (ft_putchar(hex[digit]) == -1)
+				return (-1);
+			zero_check = 0;
+		}
+		shift -= 4;
+	}
+	if (zero_check)
+		if (ft_putchar('0') == -1)
+			return (-1);
+	return (hexlen(nbr));
 }
