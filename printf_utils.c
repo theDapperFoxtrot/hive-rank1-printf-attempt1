@@ -6,7 +6,7 @@
 /*   By: smishos <smishos@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 10:28:44 by smishos           #+#    #+#             */
-/*   Updated: 2024/05/31 16:32:52 by smishos          ###   ########.fr       */
+/*   Updated: 2024/06/05 18:06:43 by smishos          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,10 +77,12 @@ static char	*format_check(const char format)
 int	ft_print_hex(unsigned long nbr, const char format)
 {
 	char			*hex;
-	int long long	digit;
+	unsigned long long	digit;
 	int				shift;
 	int				zero_check;
 
+	if (nbr > 4294967295)
+		return (ft_putchar('0'));
 	hex = format_check(format);
 	shift = (sizeof(nbr) * 8) - 4;
 	zero_check = 1;
