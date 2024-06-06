@@ -6,13 +6,13 @@
 #    By: smishos <smishos@student.hive.fi>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/24 13:26:45 by smishos           #+#    #+#              #
-#    Updated: 2024/05/31 16:41:47 by smishos          ###   ########.fr        #
+#    Updated: 2024/06/06 17:47:36 by smishos          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = libftprintf.a
 
-SRCS = ft_printf.c printf_utils.c
+SRCS = ft_printf.c printf_utils.c printf_utils2.c
 OBJS = $(SRCS:.c=.o)
 
 CC = gcc
