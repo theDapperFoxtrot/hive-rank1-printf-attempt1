@@ -6,7 +6,7 @@
 /*   By: smishos <smishos@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 13:05:04 by smishos           #+#    #+#             */
-/*   Updated: 2024/05/31 16:33:41 by smishos          ###   ########.fr       */
+/*   Updated: 2024/06/06 16:09:08 by smishos          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,27 +38,28 @@ int ft_print_pointer(void *ptr)
     return ft_print_hex(addr, 'x');
 }
 
-int	handle_format(char format, va_list ap)
+int	handle_format(char format, va_list *ap)
 {
 	if (format == 'c')
-		ft_putchar(va_arg(ap, int));
+		ft_putchar(va_arg(*ap, int));
 	else if (format == 's')
-		ft_putstr(va_arg(ap, char *));
+		ft_putstr(va_arg(*ap, char *));
 	else if (format == 'p')
-		ft_print_pointer(va_arg(ap, void *));
+		ft_print_pointer(va_arg(*ap, void *));
 	else if (format == 'd' || format == 'i')
-		ft_putnbr(va_arg(ap, int));
+		ft_putnbr(va_arg(*ap, int));
 	else if (format == 'u')
-		ft_putnbr_unsigned(va_arg(ap, unsigned int));
+		ft_putnbr_unsigned(va_arg(*ap, unsigned int));
 	else if (format == 'x')
-		ft_print_hex(va_arg(ap, unsigned int), 'x');
+		ft_print_hex(va_arg(*ap, unsigned int), 'x');
 	else if (format == 'X')
-		ft_print_hex(va_arg(ap, unsigned int), 'X');
+		ft_print_hex(va_arg(*ap, unsigned int), 'X');
 	else if (format == '%')
 		ft_putchar('%');
 	return (1);
 }
 
+//This function needs to return the length of the string
 int	ft_printf(const char *input, ...)
 {
 	va_list	ap;
@@ -69,7 +70,9 @@ int	ft_printf(const char *input, ...)
 		if (*input == '%')
 		{
 			input++;
-			input += handle_format(*input, ap);
+			if (*input == 0)
+				break ;
+			handle_format(*input, &ap); //This needs to return a length
 		}
 		else
 			ft_putchar(*input);
